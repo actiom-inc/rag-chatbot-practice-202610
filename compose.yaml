@@ -1,0 +1,30 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "127.0.0.1:8501:8501"
+    volumes:
+      # AIコーディングツールが編集したコードを再ビルドせず反映
+      - .:/app
+      # ベクトルDBとチェックポイント復帰用のバックアップ
+      - rag_data:/app/.data
+      # ローカルEmbeddingモデルのダウンロードキャッシュ
+      - rag_models:/models
+    init: true
+    environment:
+      ANONYMIZED_TELEMETRY: "false"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=5)"
+      start_period: 40s
+      interval: 15s
+      timeout: 8s
+      retries: 5
+
+volumes:
+  rag_data:
+  rag_models:

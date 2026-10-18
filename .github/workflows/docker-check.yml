@@ -1,0 +1,29 @@
+name: Docker smoke test
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  docker-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker compose build
+      - name: Run tests without API key
+        run: docker compose run --rm app python -m unittest discover -s tests -v
+      - name: Restore full RAG checkpoint on bind-mounted source
+        run: docker compose run --rm --user 0:0 app python scripts/restore_checkpoint.py step4
+      - name: Start Streamlit
+        run: docker compose up -d --wait
+      - name: Check application health
+        run: curl --fail --show-error --silent http://127.0.0.1:8501/_stcore/health
+      - name: Show application logs on failure
+        if: failure()
+        run: docker compose logs app
+      - name: Stop and remove test volumes
+        if: always()
+        run: docker compose down -v
