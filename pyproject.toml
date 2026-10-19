@@ -1,0 +1,21 @@
+[project]
+name = "rag-chatbot-practice-202610"
+version = "0.1.0"
+description = "60-minute hands-on RAG chatbot workshop"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "anthropic>=0.49,<1",
+    "chromadb>=1.0,<2",
+    "openai>=1.60,<3",
+    "python-dotenv>=1.0,<2",
+    "sentence-transformers>=3.3,<6",
+    "streamlit>=1.40,<2",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8,<10",
+]
+
+[tool.uv]
+package = false
