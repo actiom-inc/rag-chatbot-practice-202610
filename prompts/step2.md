@@ -1,4 +1,4 @@
-# STEP 2 — TXT登録とベクトル検索（目安15分）
+# TXT登録とベクトル検索
 
 `app.py` と `practice/rag.py` のみを編集し、既存のチャット機能を残してください。共通部品 `practice.embeddings` および `practice.settings` は変更しないでください。
 

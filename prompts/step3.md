@@ -1,4 +1,4 @@
-# STEP 3 — RAG回答の実装（目安15分）
+# RAG回答の実装
 
 `app.py` と `practice/rag.py` のみを編集してください。STEP 2の資料登録機能は残してください。
 
